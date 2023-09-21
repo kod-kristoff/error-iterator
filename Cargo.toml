@@ -1,6 +1,9 @@
 [package]
-name = "rust-streaming-utf8"
+name = "error-iterator"
 version = "0.1.0"
-authors = ["Chris Allen <cma@bitemyapp.com>"]
+authors = [
+  "Chris Allen <cma@bitemyapp.com>",
+  "Kristoffer Anderson <kod.kristoff@gmail.com>",
+]
 
 [dependencies]
