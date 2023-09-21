@@ -1,3 +1,5 @@
+pub mod io;
+pub mod utf8;
 
 pub enum Step<T, E> {
     Done,
@@ -85,11 +87,7 @@ where
     }
 }
 
-impl<I, T, E> ToEIter for I
-where
-    I: Iterator<Item = Result<T, E>>,
-{
-}
+impl<I, T, E> ToEIter for I where I: Iterator<Item = Result<T, E>> {}
 
 pub struct Map<I, F> {
     iter: I,
@@ -173,4 +171,3 @@ where
         }
     }
 }
-

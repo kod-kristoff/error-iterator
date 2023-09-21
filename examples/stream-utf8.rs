@@ -1,13 +1,18 @@
 use std::collections::HashMap;
 use std::error::Error;
-use std::io::{self, Read, Write};
+use std::io::{self, Read};
+
+use error_iterator::{
+    io::EIteratorIoExt,
+    utf8::{DecodeUtf8Error, EIteratorUtf8Ext},
+    EIterator, ToEIter,
+};
 
 fn main() -> Result<(), MyAppError> {
-    let mapper: HashMap<char, char> =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".chars().zip(
-        "ДВСDЁҒGНІЈКLМПОРQЯЅТЦЏШХЧZавсdёfgніјкlмпорqгѕтцѵшхчz".chars())
-        .collect()
-        ;
+    let mapper: HashMap<char, char> = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        .chars()
+        .zip("ДВСDЁҒGНІЈКLМПОРQЯЅТЦЏШХЧZавсdёfgніјкlмпорqгѕтцѵшхчz".chars())
+        .collect();
     let convert_char = |c| *mapper.get(&c).unwrap_or(&c);
 
     let stdin = io::stdin();
@@ -53,11 +58,10 @@ impl Error for MyAppError {
     fn description(&self) -> &str {
         "MyAppError"
     }
-    fn cause(&self) -> Option<&Error> {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
         match self {
-            MyAppError::IOError(e) => e.cause(),
-            MyAppError::DecodeUtf8Error(e) => e.cause(),
+            MyAppError::IOError(e) => Some(e),
+            MyAppError::DecodeUtf8Error(e) => Some(e),
         }
     }
 }
-

@@ -1,4 +1,9 @@
+use std::io;
+use std::io::Write;
 
+use crate::EIterator;
+
+pub trait EIteratorIoExt: EIterator {
     fn write_to<W: Write>(self, mut hout: W) -> Result<(), Self::Error>
     where
         Self: EIterator<Item = u8>,
@@ -26,3 +31,6 @@
 
         Ok(())
     }
+}
+
+impl<I, E> EIteratorIoExt for I where I: EIterator<Item = u8, Error = E> {}

@@ -1,4 +1,6 @@
+use crate::{EIterator, Step};
 
+pub trait EIteratorUtf8Ext: EIterator {
     fn decode_utf8(self) -> DecodeUtf8<Self>
     where
         Self: Sized,
@@ -23,7 +25,9 @@
             index: 4,
         }
     }
+}
 
+impl<I, T, E> EIteratorUtf8Ext for I where I: EIterator<Item = T, Error = E> {}
 
 pub struct DecodeUtf8<I> {
     iter: I,
@@ -42,7 +46,7 @@ impl std::fmt::Display for DecodeUtf8Error {
         }
     }
 }
-impl Error for DecodeUtf8Error {
+impl std::error::Error for DecodeUtf8Error {
     fn description(&self) -> &str {
         "UTF8 decode error"
     }
