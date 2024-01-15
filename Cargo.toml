@@ -1,5 +1,5 @@
 [package]
-name = "error-iterator"
+name = "result-iterator"
 version = "0.1.0"
 authors = [
   "Chris Allen <cma@bitemyapp.com>",

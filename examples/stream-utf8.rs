@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::error::Error;
 use std::io::{self, Read};
 
-use error_iterator::{
+use result_iterator::{
     io::EIteratorIoExt,
     utf8::{DecodeUtf8Error, EIteratorUtf8Ext},
     EIterator, ToEIter,
